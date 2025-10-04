@@ -5,7 +5,7 @@ public class Customer {
     String iban;
     String bic;
     String city;
-    int creditcardnumber;
+    double creditcardnumber;
     int cvc;
 
     public int howOld(int alter) {
@@ -21,7 +21,7 @@ public class Customer {
         this.surname = zuname;
         return vorname + " " + zuname;
     }
-    public String cardinfo(String IBAN, String BIC, String Ort, int CVC, int KKN) {
+    public String cardinfo(String IBAN, String BIC, String Ort, int CVC, double KKN) {
         this.iban = IBAN;
         this.bic = BIC;
         this.city = Ort;
@@ -37,7 +37,15 @@ public class Customer {
                     if (Ort.length() <= 1) {
                         throw new IllegalArgumentException("Was soll den das bitte für ein Wohnort sein?");
                     } else { // continue here
-                        return "false";
+                        if (CVC < 100 || CVC > 999) {
+                            throw new IllegalArgumentException("Das ist kein allgemein-gültiger CVV/CVC!");
+                        } else {
+                            if (KKN < Math.pow(10, 15) || KKN > 9.999999999999999 * Math.pow(10, 15)) {
+                                throw new IllegalArgumentException("Diese Kreditkartennummer kann nicht existieren!");
+                            } else {
+                                return "Die Bankdaten sind: \n IBAN: " + IBAN + "\n BIC: " + BIC + "\n Wohnort: " + Ort + "\n CVC: " + CVC + "\n Kreditkartennummer: " + KKN;
+                            }
+                        }
                     }
                 }
         }

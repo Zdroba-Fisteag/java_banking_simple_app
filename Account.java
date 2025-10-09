@@ -1,15 +1,27 @@
 public class Account {
-    int a;
+    private int balance;
 
-    public void deposit() {
-
+    public Account(int startkontostand) {
+        this.balance = startkontostand;
     }
 
-    public void withdraw() {
+    public int deposit(int amount) {
+        if (amount > 0) {
+            this.balance += amount;
+        }
+        return this.balance;
+    }
 
+    public int withdraw(int amount) {
+        if (amount > 0 && this.balance >= amount) {
+            this.balance -= amount;
+        } else {
+            throw new IllegalArgumentException("Zu wenig Geld oder einfach zu viel hacken versucht.");
+        }
+        return this.balance;
     }
 
     public int getBalance() {
-        return a; // Put this here to calm down the return int error.
+        return this.balance;
     }
 }
